@@ -1,11 +1,10 @@
-// Firebase Config Placeholder - 사용자가 나중에 실제 값으로 교체해야 함
 const firebaseConfig = {
-    apiKey: "API_KEY_PLACEHOLDER",
-    authDomain: "PROJECT_ID.firebaseapp.com",
-    projectId: "PROJECT_ID",
-    storageBucket: "PROJECT_ID.appspot.com",
-    messagingSenderId: "SENDER_ID",
-    appId: "APP_ID"
+    apiKey: "AIzaSyCVMHC0cjVdruZ6e82Ipn3W21nbUJKQ07g",
+    authDomain: "golden-hour-9693a.firebaseapp.com",
+    projectId: "golden-hour-9693a",
+    storageBucket: "golden-hour-9693a.firebasestorage.app",
+    messagingSenderId: "513777333720",
+    appId: "1:513777333720:web:2153c7b4422052ad0e2ead"
 };
 
 // Initialize Firebase (실제 설정이 없으면 에러가 날 수 있으므로 try-catch로 감쌈)
