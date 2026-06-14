@@ -85,8 +85,7 @@ let correctCount = 0;
 let startTime = null;
 let timerInterval = null;
 let studentInfo = {
-    id: '',
-    name: ''
+    id: ''
 };
 
 // DOM 요소
@@ -119,10 +118,9 @@ function updateTimer() {
 loginForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const idInput = document.getElementById('student-id').value.trim();
-    const nameInput = document.getElementById('student-name').value.trim();
 
     // 관리자 로그인 체크
-    if (idInput === "선생님" && nameInput === "선생님") {
+    if (idInput === "선생님") {
         showScreen('admin-screen');
         loadRanking();
         return;
@@ -137,8 +135,7 @@ loginForm.addEventListener('submit', (e) => {
 
     // 학생 정보 저장 및 게임 시작
     studentInfo.id = idInput;
-    studentInfo.name = nameInput;
-    displayNickname.textContent = `${studentInfo.id} ${studentInfo.name}`;
+    displayNickname.textContent = studentInfo.id;
     
     // 초기화
     currentQuestionIndex = 0;
@@ -221,8 +218,6 @@ async function endGame() {
         try {
             await db.collection('cpr_escape_ranking').add({
                 studentId: studentInfo.id,
-                name: studentInfo.name,
-                nickname: `${studentInfo.id} ${studentInfo.name}`,
                 startTime: firebase.firestore.Timestamp.fromDate(startTime),
                 endTime: firebase.firestore.Timestamp.fromDate(endTime),
                 elapsedTime: elapsedTime,
@@ -245,23 +240,21 @@ async function endGame() {
 
 // 다시 시작
 document.getElementById('restart-btn').addEventListener('click', () => {
-    studentInfo = { id: '', name: '' };
+    studentInfo = { id: '' };
     document.getElementById('student-id').value = '';
-    document.getElementById('student-name').value = '';
     showScreen('login-screen');
 });
 
 // 관리자 로그아웃
 document.getElementById('admin-logout-btn').addEventListener('click', () => {
     document.getElementById('student-id').value = '';
-    document.getElementById('student-name').value = '';
     showScreen('login-screen');
 });
 
 // 관리자 랭킹 불러오기
 async function loadRanking() {
     const tbody = document.getElementById('ranking-body');
-    tbody.innerHTML = '<tr><td colspan="6">데이터 불러오는 중...</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="5">데이터 불러오는 중...</td></tr>';
     
     if (db) {
         try {
@@ -271,7 +264,7 @@ async function loadRanking() {
                 
             tbody.innerHTML = '';
             if (snapshot.empty) {
-                tbody.innerHTML = '<tr><td colspan="6">기록이 없습니다.</td></tr>';
+                tbody.innerHTML = '<tr><td colspan="5">기록이 없습니다.</td></tr>';
                 return;
             }
 
@@ -285,7 +278,6 @@ async function loadRanking() {
                 tr.innerHTML = `
                     <td>${rank++}</td>
                     <td>${data.studentId}</td>
-                    <td>${data.name}</td>
                     <td>${minutes}:${seconds}</td>
                     <td>${data.correctCount} / 5</td>
                     <td>성공</td>
@@ -298,11 +290,10 @@ async function loadRanking() {
         }
     } else {
         tbody.innerHTML = `
-            <tr><td colspan="6">Firebase가 설정되지 않았습니다 (Mock Mode)</td></tr>
+            <tr><td colspan="5">Firebase가 설정되지 않았습니다 (Mock Mode)</td></tr>
             <tr>
                 <td>1</td>
                 <td>30101</td>
-                <td>테스트학생</td>
                 <td>01:30</td>
                 <td>5 / 5</td>
                 <td>성공</td>
