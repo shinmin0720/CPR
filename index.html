@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CPR Escape - 골든타임 방탈출</title>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- 로그인 화면 -->
+        <section id="login-screen" class="screen active">
+            <div class="door-container">
+                <div class="door-left"></div>
+                <div class="door-right"></div>
+                <div class="login-panel glass-panel">
+                    <h1>CPR Escape</h1>
+                    <h2>골든타임 방탈출</h2>
+                    <p class="intro-text">메디케어 학생 여러분, 여러분은 누군가의 생명을 살릴 수 있는 사람입니다. 골든타임을 지키는 최고의 구조사가 되어보세요!</p>
+                    
+                    <form id="login-form">
+                        <div class="input-group">
+                            <label for="student-id">학번</label>
+                            <input type="text" id="student-id" placeholder="예: 30101 (5자리)" required autocomplete="off">
+                        </div>
+                        <div class="input-group">
+                            <label for="student-name">이름</label>
+                            <input type="text" id="student-name" placeholder="이름을 입력하세요" required autocomplete="off">
+                        </div>
+                        <button type="submit" class="btn primary-btn" id="start-btn">방탈출 시작</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- 게임 화면 -->
+        <section id="game-screen" class="screen">
+            <div class="game-header">
+                <div class="user-info">
+                    <span id="display-nickname">학생 정보</span>
+                </div>
+                <div class="timer">
+                    <span id="time-display">00:00</span>
+                </div>
+                <div class="progress">
+                    진행도: <span id="progress-text">1 / 5</span>
+                </div>
+            </div>
+
+            <div class="game-content">
+                <div class="door-transition-container" style="display: none;">
+                    <div class="door-left transition"></div>
+                    <div class="door-right transition"></div>
+                </div>
+                
+                <div class="question-card glass-panel" id="question-container">
+                    <h2 id="question-text" class="question-text">문제 로딩중...</h2>
+                    <div id="options-container" class="options-grid">
+                        <!-- 옵션 버튼들이 여기에 추가됩니다. -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 결과 화면 -->
+        <section id="result-screen" class="screen">
+            <div class="result-panel glass-panel">
+                <h1>탈출 성공!</h1>
+                <p>훌륭합니다! 여러분은 소중한 생명을 구하는 방법을 완벽하게 숙지했습니다.</p>
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-label">소요 시간</span>
+                        <span id="final-time" class="stat-value">00:00</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">정답 수</span>
+                        <span id="final-score" class="stat-value">5 / 5</span>
+                    </div>
+                </div>
+                <button id="restart-btn" class="btn secondary-btn">처음으로 돌아가기</button>
+            </div>
+        </section>
+
+        <!-- 관리자 화면 -->
+        <section id="admin-screen" class="screen">
+            <div class="admin-panel glass-panel">
+                <div class="admin-header">
+                    <h1>선생님 대시보드</h1>
+                    <button id="admin-logout-btn" class="btn secondary-btn small">로그아웃</button>
+                </div>
+                
+                <div class="table-container">
+                    <table id="ranking-table">
+                        <thead>
+                            <tr>
+                                <th>순위</th>
+                                <th>학번</th>
+                                <th>이름</th>
+                                <th>소요 시간</th>
+                                <th>정답 수</th>
+                                <th>상태</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ranking-body">
+                            <!-- 학생 기록이 여기에 표시됩니다. -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Firebase 설정 및 앱 로직 -->
+    <script src="app.js"></script>
+</body>
+</html>

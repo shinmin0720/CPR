@@ -1,0 +1,345 @@
+:root {
+    /* 파스텔 톤 색상 팔레트 */
+    --color-bg: #e0f2f1; /* 민트 베이스 */
+    --color-primary: #80cbc4; /* 짙은 파스텔 민트 */
+    --color-primary-dark: #4db6ac;
+    --color-secondary: #b39ddb; /* 파스텔 퍼플 */
+    --color-secondary-dark: #9575cd;
+    --color-accent: #f48fb1; /* 파스텔 핑크 */
+    --color-text: #37474f; /* 부드러운 다크 그레이 */
+    --color-text-light: #546e7a;
+    --color-white: #ffffff;
+    --color-glass: rgba(255, 255, 255, 0.7);
+    --color-glass-border: rgba(255, 255, 255, 0.5);
+    
+    --shadow-soft: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+    --border-radius: 20px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Noto Sans KR', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, var(--color-bg), #e1bee7); /* 민트 -> 연보라 그라데이션 */
+    color: var(--color-text);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* 문 애니메이션을 위해 오버플로우 숨김 */
+}
+
+#app {
+    width: 100%;
+    max-width: 1200px;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.screen {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.screen.active {
+    display: flex;
+    opacity: 1;
+    z-index: 10;
+}
+
+/* Glassmorphism Panel */
+.glass-panel {
+    background: var(--color-glass);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--color-glass-border);
+    border-radius: var(--border-radius);
+    padding: 2.5rem;
+    box-shadow: var(--shadow-soft);
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    z-index: 5;
+}
+
+h1 {
+    color: var(--color-primary-dark);
+    font-size: 2.5rem;
+    font-weight: 900;
+    margin-bottom: 0.5rem;
+}
+
+h2 {
+    color: var(--color-secondary-dark);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+p.intro-text {
+    font-size: 1rem;
+    color: var(--color-text-light);
+    line-height: 1.6;
+    margin-bottom: 2rem;
+}
+
+/* Form Styles */
+.input-group {
+    margin-bottom: 1.5rem;
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: var(--color-text);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 1rem;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.9);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    outline: none;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.input-group input:focus {
+    border-color: var(--color-primary);
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.05), 0 0 0 4px rgba(128, 203, 196, 0.2);
+}
+
+/* Buttons */
+.btn {
+    width: 100%;
+    padding: 1rem;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+    outline: none;
+}
+
+.primary-btn {
+    background-color: var(--color-primary);
+    color: white;
+    box-shadow: 0 4px 15px rgba(128, 203, 196, 0.4);
+}
+
+.primary-btn:hover {
+    background-color: var(--color-primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(77, 182, 172, 0.5);
+}
+
+.primary-btn:active {
+    transform: translateY(1px);
+}
+
+.secondary-btn {
+    background-color: var(--color-secondary);
+    color: white;
+    box-shadow: 0 4px 15px rgba(179, 157, 219, 0.4);
+}
+
+.secondary-btn:hover {
+    background-color: var(--color-secondary-dark);
+    transform: translateY(-2px);
+}
+
+/* Game Header */
+.game-header {
+    width: 100%;
+    max-width: 800px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--color-glass);
+    padding: 1rem 2rem;
+    border-radius: 15px;
+    box-shadow: var(--shadow-soft);
+    margin-bottom: 2rem;
+    position: absolute;
+    top: 2rem;
+}
+
+.game-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.question-card {
+    max-width: 800px;
+    padding: 3rem;
+}
+
+.question-text {
+    font-size: 1.5rem;
+    color: var(--color-text);
+    margin-bottom: 2.5rem;
+    line-height: 1.5;
+}
+
+.options-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+.option-btn {
+    background: rgba(255, 255, 255, 0.8);
+    border: 2px solid var(--color-primary);
+    color: var(--color-text);
+    padding: 1rem 1.5rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    text-align: left;
+}
+
+.option-btn:hover {
+    background: var(--color-primary);
+    color: white;
+    transform: translateX(5px);
+}
+
+/* 문 애니메이션 스타일 (Door-centric UI) */
+.door-container, .door-transition-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    display: flex;
+}
+
+#login-screen .door-container {
+    z-index: 0; /* 폼 뒤에 위치 */
+}
+
+.door-left, .door-right {
+    width: 50%;
+    height: 100%;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%23b3e5fc" opacity="0.8"/></svg>');
+    background-size: cover;
+    transition: transform 1.5s cubic-bezier(0.645, 0.045, 0.355, 1);
+    box-shadow: inset 0 0 50px rgba(0,0,0,0.1);
+}
+
+.door-left {
+    transform-origin: left;
+    border-right: 4px solid #81d4fa;
+}
+
+.door-right {
+    transform-origin: right;
+    border-left: 4px solid #81d4fa;
+}
+
+/* 문 열림 상태 */
+.door-open .door-left {
+    transform: perspective(1200px) rotateY(90deg);
+}
+
+.door-open .door-right {
+    transform: perspective(1200px) rotateY(-90deg);
+}
+
+/* 관리자 화면 */
+.admin-panel {
+    max-width: 900px;
+    width: 90%;
+}
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.admin-header h1 {
+    margin: 0;
+}
+
+.table-container {
+    overflow-x: auto;
+    background: white;
+    border-radius: 12px;
+    padding: 1rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 1rem;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+th {
+    background-color: var(--color-bg);
+    color: var(--color-primary-dark);
+    font-weight: 700;
+}
+
+tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+/* 결과 통계 */
+.stats {
+    display: flex;
+    justify-content: space-around;
+    margin: 2rem 0;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.stat-label {
+    font-size: 0.9rem;
+    color: var(--color-text-light);
+    margin-bottom: 0.5rem;
+}
+
+.stat-value {
+    font-size: 2rem;
+    font-weight: 900;
+    color: var(--color-accent);
+}
