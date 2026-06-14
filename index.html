@@ -12,6 +12,12 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- Audio Elements -->
+    <audio id="bgm" src="https://assets.mixkit.co/music/preview/mixkit-game-level-music-689.mp3" loop></audio>
+    <audio id="sfx-correct" src="https://assets.mixkit.co/sfx/preview/mixkit-correct-answer-tone-2870.mp3"></audio>
+    <audio id="sfx-wrong" src="https://assets.mixkit.co/sfx/preview/mixkit-wrong-answer-fail-notification-946.mp3"></audio>
+    <audio id="sfx-door" src="https://assets.mixkit.co/sfx/preview/mixkit-heavy-sliding-door-open-1875.mp3"></audio>
+
     <div id="app">
         <!-- 로그인 화면 -->
         <section id="login-screen" class="screen active">
@@ -40,6 +46,9 @@
                 <div class="user-info">
                     <span id="display-nickname">학생 정보</span>
                 </div>
+                <div class="gems-info" style="font-weight: bold; color: var(--color-primary-dark);">
+                    💎 <span id="gems-count">3</span>
+                </div>
                 <div class="timer">
                     <span id="time-display">00:00</span>
                 </div>
@@ -55,7 +64,10 @@
                 </div>
                 
                 <div class="question-card glass-panel" id="question-container">
-                    <h2 id="question-text" class="question-text">문제 로딩중...</h2>
+                    <div class="question-header" style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem;">
+                        <h2 id="question-text" class="question-text" style="margin-bottom: 0; flex: 1; text-align: left;">문제 로딩중...</h2>
+                        <button id="hint-btn" class="btn secondary-btn small" style="width: auto; padding: 0.5rem 1rem; margin-left: 1rem; flex-shrink: 0;">힌트 💡</button>
+                    </div>
                     <div id="options-container" class="options-grid">
                         <!-- 옵션 버튼들이 여기에 추가됩니다. -->
                     </div>
@@ -108,6 +120,15 @@
                 </div>
             </div>
         </section>
+
+        <!-- 해설 모달 -->
+        <div id="explanation-modal" class="modal-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 100; justify-content: center; align-items: center;">
+            <div class="modal-content glass-panel" style="max-width: 600px; text-align: center;">
+                <h2 id="explanation-title" style="color: var(--color-primary-dark); font-size: 2rem;">정답입니다! 🎉</h2>
+                <p id="explanation-text" style="font-size: 1.2rem; line-height: 1.6; margin-bottom: 2rem; color: var(--color-text);">해설 내용</p>
+                <button id="next-question-btn" class="btn primary-btn">다음으로 이동</button>
+            </div>
+        </div>
     </div>
 
     <!-- Firebase 설정 및 앱 로직 -->
